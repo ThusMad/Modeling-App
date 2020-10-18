@@ -94,6 +94,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Modeler.Core\Modeler.Core.csproj">
+      <Project>{AE6822E5-8F83-4044-938E-D1CE467B90C4}</Project>
+      <Name>Modeler.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

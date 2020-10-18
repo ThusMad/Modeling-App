@@ -4,48 +4,104 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:renderer="clr-namespace:Modeler.Renderer;assembly=Modeler.Renderer"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
         Background="{DynamicResource BackgroundGapBrush}"
-        Title="MainWindow" Height="768" Width="1366">
+        
+        Title="MainWindow" Height="1080" Width="1920"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control"
+                    Key="R"
+                    Command="{Binding RefreshCommand}"/>
+    </Window.InputBindings>
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Theme/Color.xaml"/>
                 <ResourceDictionary Source="../../Theme/Menu.xaml"/>
+                <ResourceDictionary Source="../../Theme/Buttons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="SizeChanged">
+            <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=SizeChangedCommand}"
+                                PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid Margin="0,1,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Name="MenuBar">
-            <Menu HorizontalAlignment="Left"  Width="55" Height="30">
-                <MenuItem Padding="16,0,0,0" Header="_File" Width="55" Height="30" Template="{StaticResource VsMenuTop}">
-                    <MenuItem Header="_New" Template="{StaticResource VsMenuSub}" Icon="../../Resources/file-plus.png"/>
-                    <MenuItem Header="_Open" Template="{StaticResource VsMenuSub}" Icon="../../Resources/file.png"/>
-                    <MenuItem Header="_Save" Template="{StaticResource VsMenuSub}" Icon="../../Resources/save.png"/>
-                    <Separator Template="{StaticResource VsMenuSep}"/>
-                    <MenuItem Header="_Exit" Template="{StaticResource VsMenuSub}" Icon="../../Resources/log-out.png"/>
-                </MenuItem>
-            </Menu>
-            <Menu Margin="1,0,0,0" HorizontalAlignment="Left"  Width="55" Height="30">
-                <MenuItem Padding="16,0,0,0" Header="_Edit" Width="55" Height="30" Template="{StaticResource VsMenuTop}">
-                    <MenuItem Header="_New" Template="{StaticResource VsMenuSub}" Icon="../../Resources/file-plus.png"/>
-                    <MenuItem Header="_Open" Template="{StaticResource VsMenuSub}"/>
-                    <MenuItem Header="_Save" Template="{StaticResource VsMenuSub}"/>
-                    <Separator Template="{StaticResource VsMenuSep}"/>
-                    <MenuItem Header="_Exit" Template="{StaticResource VsMenuSub}"/>
-                </MenuItem>
-            </Menu>
-        </StackPanel>
-        <Grid HorizontalAlignment="Left" Margin="0,4,0,0" Grid.Row="1" Width="1358">
-            <StackPanel Height="40" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Top" Name="TabMenu"/>
-            <renderer:SceneControl x:Name="SceneControl" Margin="0,41,5,0" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Width="auto" Name="MenuBar" HorizontalAlignment="Left">
+                <Menu HorizontalAlignment="Left"  Width="55" Height="30">
+                    <MenuItem Padding="16,0,0,0" Header="_File" Width="55" Height="30" Template="{StaticResource VsMenuTop}">
+                        <MenuItem Header="_New" Template="{StaticResource VsMenuSub}" Icon="../../Resources/file-plus.png" Command="{Binding FileCreateCommand}"/>
+                        <MenuItem Header="_Open" Template="{StaticResource VsMenuSub}" Icon="../../Resources/file.png" Command="{Binding FileOpenCommand}"/>
+                        <MenuItem Header="_Save" Template="{StaticResource VsMenuSub}" Icon="../../Resources/save.png" Command="{Binding FileSaveCommand}"/>
+                        <MenuItem Header="_SaveAll" Template="{StaticResource VsMenuSub}" Icon="../../Resources/save.png" Command="{Binding FileSaveAllCommand}"/>
+                        <Separator Template="{StaticResource VsMenuSep}"/>
+                        <MenuItem Header="_Exit" Template="{StaticResource VsMenuSub}" Icon="../../Resources/log-out.png"/>
+                    </MenuItem>
+                </Menu>
+                <Menu Margin="1,0,0,0" HorizontalAlignment="Left"  Width="55" Height="30">
+                    <MenuItem Padding="16,0,0,0" Header="_Edit" Width="55" Height="30" Template="{StaticResource VsMenuTop}">
+                        <MenuItem Header="_New" Template="{StaticResource VsMenuSub}" Icon="../../Resources/file-plus.png"/>
+                        <MenuItem Header="_Open" Template="{StaticResource VsMenuSub}"/>
+                        <MenuItem Header="_Save" Template="{StaticResource VsMenuSub}"/>
+                        <Separator Template="{StaticResource VsMenuSep}"/>
+                        <MenuItem Header="_Exit" Template="{StaticResource VsMenuSub}"/>
+                    </MenuItem>
+                </Menu>
+            </StackPanel>
+            <Rectangle Margin="1,0,0,0" Grid.Column="1" Fill="{DynamicResource BackgroundBrush}"/>
         </Grid>
-            
-        
+
+        <Grid Margin="0,4,0,0" Grid.Row="1">
+            <ItemsControl Height="40" Grid.Row="0" VerticalAlignment="Top" ItemsSource="{Binding Tabs}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" Name="TabMenu"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Width="140" Height="40" Margin="0,0,1,0" HorizontalAlignment="Left" Style="{DynamicResource TabButton}" Content="{Binding Name}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <renderer:SceneControl Cursor="{Binding Cursor}" Grid="{Binding Grid}" Shapes="{Binding Shapes}" x:Name="SceneControl" Margin="0,41,5,0" />
+        </Grid>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,51,0,10" HorizontalAlignment="Left" Width="46">
+            <Button Style="{DynamicResource ToolButton}">
+                <Image Source="../../Resources/circle.png" Height="24" Width="24"></Image>
+            </Button>
+            <Button Style="{DynamicResource ToolButton}">
+                <Image Source="../../Resources/arc.png" Height="24" Width="24"></Image>
+            </Button>
+            <Button Style="{DynamicResource ToolButton}">
+                <Image Source="../../Resources/triangle.png" Height="24" Width="24"></Image>
+            </Button>
+            <Button Style="{DynamicResource ToolButton}">
+                <Image Source="../../Resources/box.png" Height="24" Width="24"></Image>
+            </Button>
+            <Button Style="{DynamicResource ToolButton}">
+                <Image Source="../../Resources/make.png" Height="24" Width="24"></Image>
+            </Button>
+        </StackPanel>
 
 
 

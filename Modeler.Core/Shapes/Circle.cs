@@ -1,5 +1,7 @@
 ﻿using System;
+using Modeler.Core.Enums;
 using Modeler.Core.Utilities;
+using Newtonsoft.Json;
 using SharpDX.Mathematics.Interop;
 
 namespace Modeler.Core.Shapes
@@ -9,23 +11,21 @@ namespace Modeler.Core.Shapes
         private int _radius;
         private int _precision;
 
+        [JsonProperty("radius")]
         public int Radius
         {
             get => _radius;
-            set
-            {
-                BuildCircle(CenterX, CenterY, value);
-            }
+            set => BuildCircle(CenterX, CenterY, value);
         }
 
-        public Circle()
+        public Circle(RawColor4 color, float thickness = 1f) : base(0, 0, ShapeType.Circle, color, thickness)
         {
             CenterX = 0;
             CenterY = 0;
             Radius = 0;
         }
 
-        public Circle(int x, int y, int radius, int precision = 360) : base(x, y)
+        public Circle(int x, int y, int radius, RawColor4 color, int precision = 360, float thickness = 1f) : base(x, y, ShapeType.Circle, color, thickness)
         {
             _precision = precision;
 

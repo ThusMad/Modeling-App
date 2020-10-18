@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modeler.Renderer", "Modeler
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modeler.App", "Modeler.App\Modeler.App.csproj", "{3B44A09D-1245-4F0A-A84C-2C531931FBE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modeler.IO", "Modeler.IO\Modeler.IO.csproj", "{760DB0B4-3329-42D4-BC7F-11B3E6D000E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3B44A09D-1245-4F0A-A84C-2C531931FBE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B44A09D-1245-4F0A-A84C-2C531931FBE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B44A09D-1245-4F0A-A84C-2C531931FBE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{760DB0B4-3329-42D4-BC7F-11B3E6D000E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{760DB0B4-3329-42D4-BC7F-11B3E6D000E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{760DB0B4-3329-42D4-BC7F-11B3E6D000E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{760DB0B4-3329-42D4-BC7F-11B3E6D000E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

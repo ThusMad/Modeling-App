@@ -1,16 +1,18 @@
-﻿using SharpDX.Mathematics.Interop;
+﻿using Modeler.Core.Enums;
+using SharpDX.Mathematics.Interop;
 
 namespace Modeler.Core.Shapes
 {
     public class Rectangle : ShapeBase
     {
-        public Rectangle()
+        public Rectangle(RawColor4 color, float thickness = 1f) : base(0, 0, ShapeType.Rectangle, color, thickness)
         {
             CenterX = 0;
             CenterY = 0;
         }
 
-        public Rectangle(int x, int y, int height, int width)
+        public Rectangle(int x, int y, int height, int width, RawColor4 color, float thickness = 1f)
+            : base(0, 0, ShapeType.Rectangle, color, thickness)
         {
             CenterX = x + width / 2;
             CenterY = y + height / 2;

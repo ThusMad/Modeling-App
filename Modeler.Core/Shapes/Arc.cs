@@ -1,15 +1,15 @@
 ﻿using System;
+using Modeler.Core.Enums;
 using Modeler.Core.Utilities;
 using SharpDX.Mathematics.Interop;
 
 namespace Modeler.Core.Shapes
 {
-    public class Arc : ShapeBase 
+    public class Arc : ShapeBase
     {
-        public Arc(int x1, int y1, int x2, int y2, double angle, int precision)
+        public Arc(int x1, int y1, int x2, int y2, double angle, int precision, RawColor4 color, float thickness = 1) :
+            base(0, 0, ShapeType.Arc, color, thickness)
         {
-            
-
             var rad = Utility.DegToRad(angle);
 
             var mx = (x1 + x2) / 2;
