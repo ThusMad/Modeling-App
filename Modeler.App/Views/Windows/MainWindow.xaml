@@ -15,6 +15,12 @@
         <KeyBinding Modifiers="Control"
                     Key="R"
                     Command="{Binding RefreshCommand}"/>
+        <KeyBinding Modifiers="Control"
+                    Key="X"
+                    Command="{Binding HorizontalHeldCommand}"/>
+        <KeyBinding Modifiers="Control"
+                    Key="Y"
+                    Command="{Binding VerticalHeldCommand}"/>
     </Window.InputBindings>
 
     <Window.Resources>
@@ -82,23 +88,36 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <renderer:SceneControl Cursor="{Binding Cursor}" Grid="{Binding Grid}" Shapes="{Binding Shapes}" x:Name="SceneControl" Margin="0,41,5,0" />
+            <renderer:SceneControl Cursor="{Binding Cursor}"
+                                   x:Name="SceneControl" 
+                                   Margin="0,41,0,0" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                        <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=SceneClickCommand}"
+                                            PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseMove">
+                        <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=MouseMoveCommand}"
+                                            PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </renderer:SceneControl>
         </Grid>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,51,0,10" HorizontalAlignment="Left" Width="46">
-            <Button Style="{DynamicResource ToolButton}">
+            <Button Style="{DynamicResource ToolButton}" Command="{Binding SelectToolCommand}" CommandParameter="Circle">
                 <Image Source="../../Resources/circle.png" Height="24" Width="24"></Image>
             </Button>
-            <Button Style="{DynamicResource ToolButton}">
+            <Button Style="{DynamicResource ToolButton}" Command="{Binding SelectToolCommand}" CommandParameter="Arc">
                 <Image Source="../../Resources/arc.png" Height="24" Width="24"></Image>
             </Button>
-            <Button Style="{DynamicResource ToolButton}">
+            <Button Style="{DynamicResource ToolButton}" Command="{Binding SelectToolCommand}" CommandParameter="Triangle">
                 <Image Source="../../Resources/triangle.png" Height="24" Width="24"></Image>
             </Button>
-            <Button Style="{DynamicResource ToolButton}">
+            <Button Style="{DynamicResource ToolButton}" Command="{Binding SelectToolCommand}" CommandParameter="Rectangle">
                 <Image Source="../../Resources/box.png" Height="24" Width="24"></Image>
             </Button>
-            <Button Style="{DynamicResource ToolButton}">
+            <Button Style="{DynamicResource ToolButton}" Command="{Binding SelectToolCommand}" CommandParameter="Line">
                 <Image Source="../../Resources/make.png" Height="24" Width="24"></Image>
             </Button>
         </StackPanel>

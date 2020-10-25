@@ -302,8 +302,5 @@ namespace Modeler.App.Views.Windows
         //        Draw(target);
         //    });
         //}
-
-
-
     }
 }

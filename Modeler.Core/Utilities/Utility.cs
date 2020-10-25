@@ -8,5 +8,10 @@ namespace Modeler.Core.Utilities
         {
             return deg * Math.PI / 180;
         }
+
+        public static T ParseEnum<T>(string value)
+        {
+            return (T)Enum.Parse(typeof(T), value, true);
+        }
     }
 }
