@@ -22,6 +22,8 @@ namespace Modeler.Core.Shapes
             Data.Add(new RawVector2(x2, y2));
             Data.Add(new RawVector2(x3, y3));
             Data.Add(new RawVector2(x1, y1));
+
+            CalculateOuterBox();
         }
     }
 }

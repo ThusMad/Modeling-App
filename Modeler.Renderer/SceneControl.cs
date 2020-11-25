@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shapes;
 using GalaSoft.MvvmLight.Messaging;
 using Modeler.Core;
 using Modeler.Core.Models;
@@ -31,6 +32,12 @@ namespace Modeler.Renderer
                 this,
                 (model) => DrawModel(model)
             );
+            Messenger.Default.Register<DebugDrawingModel>
+            (
+                this,
+                (model) => OnDrawScene(model.DrawAction, _transformMatrix)
+            );
+            
             Debug.WriteLine("\n [Debug] Renderer initialization done! \n");
         }
 
@@ -49,17 +56,25 @@ namespace Modeler.Renderer
             {
                 lock (_sync)
                 {
+                    var shapesCpy = new ShapeBase[model.Shapes.Count];
+                    model.Shapes.CopyTo(shapesCpy);
+
+                    var gridCpy = new ShapeBase[model.Grid.Count];
+                    model.Grid.CopyTo(gridCpy);
+
                     OnDrawScene((target) =>
                     {
                         target.Clear(new RawColor4(1f, 1f, 1f, 1f));
 
-                        foreach (var shape in model.Grid)
+                        foreach (var shape in gridCpy)
                         {
                             target.DrawShape(shape, (int)shape.Thickness, new SolidColorBrush(target, shape.Color));
                         }
-                        foreach (var shape in model.Shapes)
+                        foreach (var shape in shapesCpy)
                         {
-                            target.DrawShape(shape, (int)shape.Thickness, new SolidColorBrush(target, shape.Color));
+                            var shapeClone = shape.Clone() as ShapeBase;
+                            shapeClone.Rotate(model.RotationAngle, model.RotationPoint.X, model.RotationPoint.Y);
+                            target.DrawShape(shapeClone, (int)shape.Thickness, new SolidColorBrush(target, shape.Color), model.XShift, model.YShift);
                         }
                     }, _transformMatrix);
                 }

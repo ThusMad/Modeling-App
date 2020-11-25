@@ -1,16 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Modeler.Core.Converters;
 using Modeler.Core.Enums;
+using Modeler.Core.Shapes;
+using Modeler.Core.Utilities;
 using Newtonsoft.Json;
 using SharpDX.Mathematics.Interop;
+using Helper = Modeler.Core.Utilities.Utility;
 
 namespace Modeler.Core
 {
-    public abstract class ShapeBase
+    public abstract class ShapeBase : ICloneable
     {
+        public bool IsMouseOver { get; set; }
+
         private int _centerX;
         private int _centerY;
+
+        public RawRectangle OuterBox { get; protected set; }
 
         protected ShapeBase()
         {
@@ -26,6 +34,47 @@ namespace Modeler.Core
             Thickness = thickness;
             _centerX = centerX;
             _centerY = centerY;
+        }
+
+        public void CalculateOuterBox()
+        {
+            var left = (int)Data.Min(a => a.X) - 2;
+            var right = (int)Data.Max(a => a.X) + 2;
+            var top = (int)Data.Min(a => a.Y) - 2;
+            var bottom = (int)Data.Max(a => a.Y) + 2;
+
+            OuterBox = new RawRectangle(left, top, right, bottom);
+        }
+
+        public IList<RawVector2> SplitLine()
+        {
+            var points = new List<RawVector2>();
+
+            for (int i = 1; i < Data.Count; i++)
+            {
+                var a = Data[i - 1];
+                var b = Data[i];
+
+                var distance = Helper.GetDistance(a.X, a.Y, b.X, b.Y);
+
+                if (Math.Abs(distance) > 5)
+                {
+                    var count = (int)(distance / 5);
+
+                    var d = Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y)) / count;
+                    var fi = Math.Atan2(b.Y - a.Y, b.X - a.X);
+
+                    for (int j = 0; j <= count; ++j)
+                        points.Add(new RawVector2((int)(a.X + j * d * Math.Cos(fi)), (int)(a.Y + j * d * Math.Sin(fi))));
+                }
+                else
+                {
+                    points.Add(a);
+                    points.Add(b);
+                }
+            }
+
+            return points;
         }
 
         [JsonProperty("data")]
@@ -67,5 +116,17 @@ namespace Modeler.Core
         public RawColor4 Color { get; set; } = new RawColor4(0f, 0f, 0f, 1f);
         [JsonProperty("line_thickness")]
         public float Thickness { get; set; } = 1;
+
+        public object Clone()
+        {
+            var newObj = new Line(0, 0, 0, 0, Color, Thickness);
+            newObj.Data.Clear();
+            this.Data.ForEach(dat =>
+            {
+                newObj.Data.Add(dat);
+            });
+
+            return newObj;
+        }
     }
 }

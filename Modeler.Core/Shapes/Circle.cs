@@ -50,6 +50,8 @@ namespace Modeler.Core.Shapes
                 Data.Add(new RawVector2(radius * (float)Math.Cos(Utility.DegToRad(angle * i)) + x,
                     radius * (float)Math.Sin(Utility.DegToRad(angle * i)) + y));
             }
+
+            CalculateOuterBox();
         }
     }
 }

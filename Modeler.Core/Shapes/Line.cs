@@ -1,4 +1,6 @@
-﻿using Modeler.Core.Enums;
+﻿using System;
+using System.Collections.Generic;
+using Modeler.Core.Enums;
 using SharpDX.Mathematics.Interop;
 
 namespace Modeler.Core.Shapes
@@ -18,6 +20,8 @@ namespace Modeler.Core.Shapes
 
             Data.Add(new RawVector2(x1, y1));
             Data.Add(new RawVector2(x2, y2));
+
+            CalculateOuterBox();
         }
     }
 }

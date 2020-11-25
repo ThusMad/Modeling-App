@@ -21,6 +21,8 @@ namespace Modeler.Core.Shapes
         {
             Message = text;
             Data.Add(new RawVector2(x, y));
+
+            CalculateOuterBox();
         }
     }
 }

@@ -15,12 +15,18 @@
         <KeyBinding Modifiers="Control"
                     Key="R"
                     Command="{Binding RefreshCommand}"/>
+        <KeyBinding Modifiers="Alt"
+                    Key="D"
+                    Command="{Binding DrawDebugInfoCommand}"/>
         <KeyBinding Modifiers="Control"
                     Key="X"
                     Command="{Binding HorizontalHeldCommand}"/>
         <KeyBinding Modifiers="Control"
                     Key="Y"
                     Command="{Binding VerticalHeldCommand}"/>
+        <KeyBinding
+                    Key="Escape"
+                    Command="{Binding EscapeCommand}"/>
     </Window.InputBindings>
 
     <Window.Resources>
@@ -66,8 +72,15 @@
                         <MenuItem Header="_New" Template="{StaticResource VsMenuSub}" Icon="../../Resources/file-plus.png"/>
                         <MenuItem Header="_Open" Template="{StaticResource VsMenuSub}"/>
                         <MenuItem Header="_Save" Template="{StaticResource VsMenuSub}"/>
-                        <Separator Template="{StaticResource VsMenuSep}"/>
-                        <MenuItem Header="_Exit" Template="{StaticResource VsMenuSub}"/>
+                    </MenuItem>
+                </Menu>
+                <Menu Margin="1,0,0,0" HorizontalAlignment="Left"  Width="135" Height="30">
+                    <MenuItem Padding="16,0,0,0" Header="_Transformations" Width="135" Height="30" Template="{StaticResource VsMenuTop}">
+                        <MenuItem Header="_Shift" Template="{StaticResource VsMenuSub}" Command="{Binding ShiftCommand}"/>
+                        <MenuItem Header="_Rotation" Template="{StaticResource VsMenuSub}" Command="{Binding RotateCommand}"/>
+                        <MenuItem Header="_Size" Template="{StaticResource VsMenuSub}"/>
+                        <MenuItem Header="_Affine" Template="{StaticResource VsMenuSub}"/>
+                        <MenuItem Header="_Homography" Template="{StaticResource VsMenuSub}"/>
                     </MenuItem>
                 </Menu>
             </StackPanel>
@@ -94,6 +107,10 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                         <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=SceneClickCommand}"
+                                            PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="PreviewMouseRightButtonDown">
+                        <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=SceneClickCtrlCommand}"
                                             PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                     <i:EventTrigger EventName="MouseMove">
