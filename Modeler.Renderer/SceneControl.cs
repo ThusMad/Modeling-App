@@ -68,12 +68,33 @@ namespace Modeler.Renderer
 
                         foreach (var shape in gridCpy)
                         {
-                            target.DrawShape(shape, (int)shape.Thickness, new SolidColorBrush(target, shape.Color));
+                            var shapeClone = shape.Clone() as ShapeBase;
+                            if (model.IsAffineActive)
+                            {
+                                shapeClone.AffineTransformation(model.AffineTransformation.R0, model.AffineTransformation.RX, model.AffineTransformation.RY);
+                            }
+
+                            if (model.IsHomographyActive)
+                            {
+                                shapeClone.ProjectiveTransformation(model.HomographyTransformation.R0, model.HomographyTransformation.RX, model.HomographyTransformation.RY);
+                            }
+
+                            target.DrawShape(shapeClone, (int)shape.Thickness, new SolidColorBrush(target, shape.Color));
                         }
                         foreach (var shape in shapesCpy)
                         {
                             var shapeClone = shape.Clone() as ShapeBase;
                             shapeClone.Rotate(model.RotationAngle, model.RotationPoint.X, model.RotationPoint.Y);
+                            if (model.IsAffineActive)
+                            {
+                                shapeClone.AffineTransformation(model.AffineTransformation.R0, model.AffineTransformation.RX, model.AffineTransformation.RY);
+                            }
+
+                            if (model.IsHomographyActive)
+                            {
+                                shapeClone.ProjectiveTransformation(model.HomographyTransformation.R0, model.HomographyTransformation.RX, model.HomographyTransformation.RY);
+                            }
+
                             target.DrawShape(shapeClone, (int)shape.Thickness, new SolidColorBrush(target, shape.Color), model.XShift, model.YShift);
                         }
                     }, _transformMatrix);
