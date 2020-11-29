@@ -79,8 +79,8 @@
                         <MenuItem Header="_Shift" Template="{StaticResource VsMenuSub}" Command="{Binding ShiftCommand}"/>
                         <MenuItem Header="_Rotation" Template="{StaticResource VsMenuSub}" Command="{Binding RotateCommand}"/>
                         <MenuItem Header="_Size" Template="{StaticResource VsMenuSub}"/>
-                        <MenuItem Header="_Affine" Template="{StaticResource VsMenuSub}"/>
-                        <MenuItem Header="_Homography" Template="{StaticResource VsMenuSub}"/>
+                        <MenuItem Header="_Affine" Template="{StaticResource VsMenuSub}" Command="{Binding AffineCommand}"/>
+                        <MenuItem Header="_Homography" Template="{StaticResource VsMenuSub}" Command="{Binding HomographyCommand}"/>
                     </MenuItem>
                 </Menu>
             </StackPanel>

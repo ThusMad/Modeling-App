@@ -1,0 +1,51 @@
+﻿<Window x:Class="Modeler.App.Views.Dialogs.HomographyTransformationDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Modeler.App.Views.Dialogs"
+        mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        Title="HomographyTransformationDialog">
+    <Grid Margin="15">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="45,0,0,0">X</TextBlock>
+                <TextBlock Margin="223,0,0,0">Y</TextBlock>
+                <TextBlock Margin="223,0,0,0">W</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>r0(</TextBlock>
+                <TextBox Name="R0X" Margin="10,0,0,0" Width="50"></TextBox>
+                <Slider Minimum="-10000" Maximum="10000" Name="R0XSlider" ValueChanged="R0XSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
+                <TextBox Name="R0Y"  Margin="10,0,0,0" Width="50"></TextBox>
+                <Slider Minimum="-10000" Maximum="10000" Name="R0YSlider" ValueChanged="R0YSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
+                <TextBox Name="R0W"  Margin="10,0,0,0" Width="50"></TextBox>
+                <Slider Minimum="-10000" Maximum="10000" Name="R0WSlider" ValueChanged="R0WSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
+            </StackPanel>
+            <StackPanel Margin="0,5,0,5" Orientation="Horizontal">
+                <TextBlock>rX(</TextBlock>
+                <TextBox Name="XX" Margin="9,0,0,0" Width="50"></TextBox>
+                <Slider Minimum="-10000" Maximum="10000" Name="RXXSlider" ValueChanged="RXXSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
+                <TextBox Name="XY"  Margin="10,0,0,0" Width="50"></TextBox>
+                <Slider Minimum="-10000" Maximum="10000" Name="RXYSlider" ValueChanged="RXYSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
+                <TextBox Name="XW"  Margin="10,0,0,0" Width="50"></TextBox>
+                <Slider Minimum="-10000" Maximum="10000" Name="RXWSlider" ValueChanged="RXWSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>rY(</TextBlock>
+                <TextBox Name="YX"  Margin="10,0,0,0" Width="50"></TextBox>
+                <Slider Minimum="-10000" Maximum="10000" Name="RYXSlider" ValueChanged="RYXSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
+                <TextBox Name="YY"  Margin="10,0,0,0" Width="50"></TextBox>
+                <Slider Minimum="-10000" Maximum="10000" Name="RYYSlider" ValueChanged="RYYSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
+                <TextBox Name="YW"  Margin="10,0,0,0" Width="50"></TextBox>
+                <Slider Minimum="-10000" Maximum="10000" Name="RYWSlider" ValueChanged="RYWSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
+            </StackPanel>
+            <WrapPanel HorizontalAlignment="Right" Margin="0,15,0,15" Grid.Column="2">
+                <Button IsDefault="True" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="60" Margin="0,0,10,0">_Ok</Button>
+                <Button IsCancel="True" MinWidth="60">_Cancel</Button>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -77,10 +77,12 @@
     <Compile Include="DrawingBehaviours\LineBehaviour.cs" />
     <Compile Include="Enums\ShapeType.cs" />
     <Compile Include="Enums\ToolType.cs" />
+    <Compile Include="Models\AffineTransformationModel.cs" />
     <Compile Include="Models\ChartModel.cs" />
     <Compile Include="Models\DebugDrawingModel.cs" />
     <Compile Include="Models\DrawModel.cs" />
     <Compile Include="Models\GridSettings.cs" />
+    <Compile Include="Models\HomographyTransformationModel.cs" />
     <Compile Include="Models\ShapePreviewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShapeBase.cs" />

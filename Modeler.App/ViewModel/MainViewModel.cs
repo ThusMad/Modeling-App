@@ -19,6 +19,7 @@ using Modeler.Core.Shapes;
 using Modeler.Core.Utilities;
 using Modeler.Renderer;
 using SharpDX.Direct2D1;
+using SharpDX.Direct2D1.Effects;
 using SharpDX.Mathematics.Interop;
 using Triangle = Modeler.Core.Shapes.Triangle;
 
@@ -68,7 +69,46 @@ namespace Modeler.App.ViewModel
             EscapeCommand = new RelayCommand(EscapeAction);
             ShiftCommand = new RelayCommand(ShiftShapes);
             RotateCommand = new RelayCommand(RotateShapes);
+            AffineCommand = new RelayCommand(AffineTransformShape);
+            HomographyCommand = new RelayCommand(HomographyTransformShaoe);
             Tabs = new ObservableCollection<TabModel>();
+        }
+
+        private void HomographyTransformShaoe()
+        {
+            var inpDialog = new HomographyTransformationDialog();
+
+            inpDialog.HomographyTransformationDelegate += model =>
+            {
+                _drawModel.IsHomographyActive = true;
+                _drawModel.HomographyTransformation = model;
+                Messenger.Default.Send<DrawModel>(_drawModel);
+            };
+
+            if (inpDialog.ShowDialog() == true)
+            {
+                _drawModel.HomographyTransformation = inpDialog.Transformation;
+                Messenger.Default.Send<DrawModel>(_drawModel);
+            }
+        }
+
+        private void AffineTransformShape()
+        {
+            var inpDialog = new AffineTransformationDialog();
+
+            inpDialog.AffineTransformationDelegate += model =>
+            {
+                _drawModel.IsAffineActive = true;
+                _drawModel.AffineTransformation = model;
+                Messenger.Default.Send<DrawModel>(_drawModel);
+            };
+
+            if (inpDialog.ShowDialog() == true)
+            {
+                _drawModel.AffineTransformation = inpDialog.Transformation;
+                Messenger.Default.Send<DrawModel>(_drawModel);
+            }
+
         }
 
         private void RotateShapes()
@@ -140,6 +180,7 @@ namespace Modeler.App.ViewModel
         public RelayCommand FileOpenCommand { get; private set; }
         public RelayCommand RefreshCommand { get; private set; }
         public RelayCommand EscapeCommand { get; private set; }
+        public RelayCommand AffineCommand { get; private set; }
         public RelayCommand<string> SelectToolCommand { get; private set; }
         public RelayCommand HorizontalHeldCommand { get; private set; }
         public RelayCommand VerticalHeldCommand { get; private set; }
@@ -148,6 +189,7 @@ namespace Modeler.App.ViewModel
         public RelayCommand<MouseButtonEventArgs> SceneClickCtrlCommand { get; private set; }
         public RelayCommand<MouseEventArgs> MouseMoveCommand { get; private set; }
         public RelayCommand RotateCommand { get; private set; }
+        public RelayCommand HomographyCommand { get; private set; }
         public Cursor Cursor { get; set; }
 
         public ObservableCollection<TabModel> Tabs { get; set; }
