@@ -6,6 +6,7 @@
         xmlns:renderer="clr-namespace:Modeler.Renderer;assembly=Modeler.Renderer"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        xmlns:controls="clr-namespace:Modeler.App.Views.Controls"
         mc:Ignorable="d"
         Background="{DynamicResource BackgroundGapBrush}"
         
@@ -103,7 +104,7 @@
 
             <renderer:SceneControl Cursor="{Binding Cursor}"
                                    x:Name="SceneControl" 
-                                   Margin="0,41,0,0" >
+                                   Margin="0,41,270,0" >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                         <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=SceneClickCommand}"
@@ -119,6 +120,18 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </renderer:SceneControl>
+            <StackPanel Background="{DynamicResource BackgroundBrush}" Name="ObjectExplorer" HorizontalAlignment="Right" Width="265">
+                <controls:ObjectControl>
+                    <controls:ObjectControl.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Menu item 1" />
+                            <MenuItem Header="Menu item 2" />
+                            <Separator />
+                            <MenuItem Header="Menu item 3" />
+                        </ContextMenu>
+                    </controls:ObjectControl.ContextMenu>
+                </controls:ObjectControl>
+            </StackPanel>
         </Grid>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,51,0,10" HorizontalAlignment="Left" Width="46">

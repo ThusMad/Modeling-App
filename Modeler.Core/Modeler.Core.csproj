@@ -72,10 +72,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ShapeEditAttribute.cs" />
     <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="Converters\VectorConverter.cs" />
     <Compile Include="DrawingBehaviours\LineBehaviour.cs" />
     <Compile Include="Enums\ShapeType.cs" />
+    <Compile Include="Enums\ShapeViewEditor.cs" />
     <Compile Include="Enums\ToolType.cs" />
     <Compile Include="Models\AffineTransformationModel.cs" />
     <Compile Include="Models\ChartModel.cs" />

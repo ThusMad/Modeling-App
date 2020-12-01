@@ -95,11 +95,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Theme\Expander.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Theme\Menu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Dialogs\AffineTransformationDialog.xaml">
+    <Page Include="Views\Controls\ObjectControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,13 +131,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Models\ChartModel.cs" />
     <Compile Include="Models\TabModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Views\Dialogs\AffineTransformationDialog.xaml.cs">
-      <DependentUpon>AffineTransformationDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Dialogs\ArcSettingsDialog.xaml.cs">
       <DependentUpon>ArcSettingsDialog.xaml</DependentUpon>
     </Compile>
