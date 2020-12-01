@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Modeler.Core.Attributes;
 using Modeler.Core.Converters;
 using Modeler.Core.Enums;
 using Modeler.Core.Shapes;
@@ -14,6 +15,8 @@ namespace Modeler.Core
     public abstract class ShapeBase : ICloneable
     {
         public bool IsMouseOver { get; set; }
+
+        public bool IsPrimary { get; set; }
 
         private int _centerX;
         private int _centerY;
@@ -57,9 +60,9 @@ namespace Modeler.Core
 
                 var distance = Helper.GetDistance(a.X, a.Y, b.X, b.Y);
 
-                if (Math.Abs(distance) > 5)
+                if (Math.Abs(distance) > 2)
                 {
-                    var count = (int)(distance / 5);
+                    var count = (int)(distance / 2);
 
                     var d = Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y)) / count;
                     var fi = Math.Atan2(b.Y - a.Y, b.X - a.X);
@@ -80,6 +83,8 @@ namespace Modeler.Core
         [JsonProperty("data")]
         [JsonConverter(typeof(VectorConverter))]
         public List<RawVector2> Data { get; set; }
+
+        [ShapeEdit("Center Y", ShapeViewEditor.Text)]
         [JsonProperty("center_y")]
         public int CenterX {
             get => _centerX;
@@ -94,6 +99,8 @@ namespace Modeler.Core
                 }
             }
         }
+
+        [ShapeEdit("Center X", ShapeViewEditor.Text)]
         [JsonProperty("center_y")]
         public int CenterY
         {
@@ -127,6 +134,16 @@ namespace Modeler.Core
             });
 
             return newObj;
+        }
+
+        public virtual ICollection<RawVector2> BuildTangen(RawVector2 point, int length)
+        {
+            return new List<RawVector2>();
+        }
+
+        public virtual ICollection<RawVector2> BuildNormal(RawVector2 point, int length)
+        {
+            return new List<RawVector2>();
         }
     }
 }

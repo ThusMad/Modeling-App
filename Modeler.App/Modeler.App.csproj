@@ -107,11 +107,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\AffineTransformationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Dialogs\ArcSettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\HomographyTransformationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\RoseCreationDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -136,11 +144,20 @@
     <Compile Include="Models\TabModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="Views\Controls\ObjectControl.xaml.cs">
+      <DependentUpon>ObjectControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\AffineTransformationDialog.xaml.cs">
+      <DependentUpon>AffineTransformationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\ArcSettingsDialog.xaml.cs">
       <DependentUpon>ArcSettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\HomographyTransformationDialog.xaml.cs">
       <DependentUpon>HomographyTransformationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\RoseCreationDialog.xaml.cs">
+      <DependentUpon>RoseCreationDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\RotateDialog.xaml.cs">
       <DependentUpon>RotateDialog.xaml</DependentUpon>
@@ -209,6 +226,8 @@
     <Resource Include="Resources\text.png" />
     <Resource Include="Resources\triangle.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\rose.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

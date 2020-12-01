@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -28,6 +29,8 @@ namespace Modeler.App.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private IInputElement _source;
+        private ShapeBase _tempTangent;
+        private ShapeBase _tempNormal;
 
         private int _xShift = 0;
         private int _yShift = 0;
@@ -71,7 +74,33 @@ namespace Modeler.App.ViewModel
             RotateCommand = new RelayCommand(RotateShapes);
             AffineCommand = new RelayCommand(AffineTransformShape);
             HomographyCommand = new RelayCommand(HomographyTransformShaoe);
+            RoseToolCommand = new RelayCommand(RoseCreationAction);
             Tabs = new ObservableCollection<TabModel>();
+        }
+
+      
+
+        private void RoseCreationAction()
+        {
+            var roseDialog = new RoseCreationDialog(_source);
+            var tempRose = new Rose(0, 0, 0, 0, 0,0, new RawColor4(1f, 0f, 0f, 1f));
+            _drawModel.Shapes.Add(tempRose);
+
+            roseDialog.ModelUpdate += model =>
+            {
+                _drawModel.Shapes.Remove(tempRose);
+                tempRose = new Rose(model, new RawColor4(1f, 0f, 0f, 1f));
+                _drawModel.Shapes.Add(tempRose);
+
+                Messenger.Default.Send<DrawModel>(_drawModel);
+            };
+
+            if (roseDialog.ShowDialog() == true)
+            {
+                _drawModel.Shapes.Remove(tempRose);
+                _drawModel.Shapes.Add(new Rose(roseDialog.RoseCreationModel, new RawColor4(0f, 0f, 0f, 1f)));
+                Messenger.Default.Send<DrawModel>(_drawModel);
+            }
         }
 
         private void HomographyTransformShaoe()
@@ -174,6 +203,7 @@ namespace Modeler.App.ViewModel
             Messenger.Default.Send<DrawModel>(_drawModel);
         }
 
+        public RelayCommand RoseToolCommand { get; set; }
         public RelayCommand DrawDebugInfoCommand { get; private set; }
         public RelayCommand ShiftCommand { get; private set; }
         public RelayCommand FileCreateCommand { get; private set; }
@@ -220,7 +250,6 @@ namespace Modeler.App.ViewModel
 
             if (_tempShape == null)
             {
-
                 CollisionBehaviour(currentPoint);
                 return;
             }
@@ -289,13 +318,53 @@ namespace Modeler.App.ViewModel
         private void CollisionBehaviour(Point currentPoint)
         {
             var shape = DetectMouseCollision(_drawModel.Shapes, new IntPoint((int)currentPoint.X, (int)currentPoint.Y));
+            
+
+
             if (shape != null)
             {
-                _shapeOver = shape;
-                shape.Color = new RawColor4(1f, 0f, 0f, 1f);
-                shape.IsMouseOver = true;
+                if (shape.Item1 == null)
+                {
+                    return;
+                }
+
+
+                if (_tempTangent != null)
+                {
+                    _drawModel.Shapes.Remove(_tempTangent);
+                    _tempTangent = null;
+                }
+
+                if (_tempNormal != null)
+                {
+                    _drawModel.Shapes.Remove(_tempNormal);
+                    _tempNormal = null;
+                }
+
+                _shapeOver = shape.Item1;
+
+                shape.Item1.Color = new RawColor4(1f, 0f, 0f, 1f);
+                shape.Item1.IsMouseOver = true;
                 Cursor = Cursors.Hand;
                 RaisePropertyChanged(nameof(Cursor));
+
+                var tangent = shape.Item1.BuildTangen(shape.Item2, 300);
+                var normal = shape.Item1.BuildNormal(shape.Item2, 300);
+
+                _tempTangent = new Line(0, 0, 0, 0, new RawColor4(0, 0f, 0.3f, 1f))
+                {
+                    Data = tangent.ToList()
+                };
+
+                _tempNormal = new Line(0, 0, 0, 0, new RawColor4(0, 0f, 0.3f, 1f))
+                {
+                    Data = normal.ToList()
+                };
+
+                _drawModel.Shapes.Add(_tempTangent);
+                _drawModel.Shapes.Add(_tempNormal);
+
+                Messenger.Default.Send<DrawModel>(_drawModel);
             }
             else
             {
@@ -557,19 +626,31 @@ namespace Modeler.App.ViewModel
 
         #endregion
 
-        private ShapeBase? DetectMouseCollision(List<ShapeBase> shapes, IntPoint position)
+        private Tuple<ShapeBase, RawVector2>? DetectMouseCollision(List<ShapeBase> shapes, IntPoint position)
         {
             foreach (var shapeBase in shapes)
             {
                 if (shapeBase.OuterBox.Left < position.X && shapeBase.OuterBox.Right > position.X &&
                     shapeBase.OuterBox.Top < position.Y && shapeBase.OuterBox.Bottom > position.Y)
                 {
+                    if (shapeBase is Rose)
+                    {
+                        foreach (var point in shapeBase.Data)
+                        {
+                            if (Math.Abs(point.X - position.X) == 0 && Math.Abs(point.Y - position.Y) == 0)
+                            {
+                                _isModelChanged = true;
+                                return new Tuple<ShapeBase, RawVector2>(shapeBase, point);
+                            }
+                        }
+                    }
+
                     foreach (var point in shapeBase.SplitLine())
                     {
-                        if (Math.Abs(point.X - position.X) <= 3 && Math.Abs(point.Y - position.Y) <= 3)
+                        if (Math.Abs(point.X - position.X) <= 2 && Math.Abs(point.Y - position.Y) <= 2)
                         {
                             _isModelChanged = true;
-                            return shapeBase;
+                            return new Tuple<ShapeBase, RawVector2>(shapeBase, point);
                         }
                     }
 
@@ -687,7 +768,7 @@ namespace Modeler.App.ViewModel
                 using (var sw = new StreamWriter(openFileDialog.FileName))
                 {
                     Tabs.Add(new TabModel(Path.GetFileNameWithoutExtension(openFileDialog.FileName)));
-                    _drawModel.Grid = GridGenerator.GenerateGrid(500, 500, 20, new IntPoint(60, 20));
+                    _drawModel.Grid = GridGenerator.GenerateGrid(500, 500, 20, new IntPoint(0, 0));
                 }
             }
         }

@@ -45,7 +45,7 @@ namespace Modeler.Core.Utilities
         public static void AffineTransformation(this ShapeBase shape, RawVector2 vector0, RawVector2 vectorX, RawVector2 vectorY)
         {
             var newData = shape.Data.Select(point =>
-                    new RawVector2(vector0.X + (point.X * vectorX.X) + (point.Y * vectorY.X), vector0.Y - (point.Y * vectorX.Y) + point.Y * vectorY.Y))
+                    VectorMath.Add(VectorMath.Add(vector0, VectorMath.Mul(vectorX, point.X)), VectorMath.Mul(vectorY, point.Y)))
                 .ToList();
 
             shape.Data = newData;

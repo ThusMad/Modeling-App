@@ -7,6 +7,7 @@
         Line,
         Rectangle,
         Text,
-        Triangle
+        Triangle,
+        Roze
     }
 }

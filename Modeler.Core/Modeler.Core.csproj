@@ -85,6 +85,7 @@
     <Compile Include="Models\DrawModel.cs" />
     <Compile Include="Models\GridSettings.cs" />
     <Compile Include="Models\HomographyTransformationModel.cs" />
+    <Compile Include="Models\RoseCreationModel.cs" />
     <Compile Include="Models\ShapePreviewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShapeBase.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Shapes\Circle.cs" />
     <Compile Include="Shapes\Line.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
+    <Compile Include="Shapes\Rose.cs" />
     <Compile Include="Shapes\Text.cs" />
     <Compile Include="Shapes\Triangle.cs" />
     <Compile Include="Utilities\DrawingExtensions.cs" />
@@ -99,6 +101,7 @@
     <Compile Include="Utilities\IntPoint.cs" />
     <Compile Include="Utilities\TransformationExtensions.cs" />
     <Compile Include="Utilities\Utility.cs" />
+    <Compile Include="Utilities\VectorMath.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

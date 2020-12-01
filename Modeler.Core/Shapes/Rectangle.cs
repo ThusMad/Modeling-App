@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Modeler.Core.Attributes;
 using Modeler.Core.Enums;
 using SharpDX.Mathematics.Interop;
 
@@ -33,6 +34,7 @@ namespace Modeler.Core.Shapes
             CalculateOuterBox();
         }
 
+        [ShapeEdit("Height", ShapeViewEditor.Text)]
         public int Height
         {
             get => _height;
@@ -43,6 +45,7 @@ namespace Modeler.Core.Shapes
             }
         }
 
+        [ShapeEdit("Width", ShapeViewEditor.Text)]
         public int Width
         {
             get => _width;

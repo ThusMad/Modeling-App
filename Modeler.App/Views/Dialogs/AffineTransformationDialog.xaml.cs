@@ -89,8 +89,8 @@ namespace Modeler.App.Views.Dialogs
         private void R0XSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             R0X.Text = ((float)e.NewValue).ToString();
-            RX.X = (float)e.NewValue;
-            Transformation.RX = RX;
+            R0.X = (float)e.NewValue;
+            Transformation.R0 = R0;
 
             AffineTransformationDelegate?.Invoke(Transformation);
         }

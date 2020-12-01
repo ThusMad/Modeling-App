@@ -17,7 +17,7 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock>r0(</TextBlock>
                 <TextBox Name="R0X" Margin="10,0,0,0" Width="50"></TextBox>
-                <Slider Minimum="-10" Maximum="10" Name="R0XSlider" ValueChanged="R0XSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
+                <Slider Minimum="-1000" Maximum="1000" Name="R0XSlider" ValueChanged="R0XSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
                 <TextBox Name="R0Y"  Margin="10,0,0,0" Width="50"></TextBox>
                 <Slider Minimum="-1200" Maximum="1200" Name="R0YSlider" ValueChanged="R0YSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
             </StackPanel>

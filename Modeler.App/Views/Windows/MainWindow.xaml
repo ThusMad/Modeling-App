@@ -104,7 +104,7 @@
 
             <renderer:SceneControl Cursor="{Binding Cursor}"
                                    x:Name="SceneControl" 
-                                   Margin="0,41,270,0" >
+                                   Margin="0,41,10,0" >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                         <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=SceneClickCommand}"
@@ -120,7 +120,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </renderer:SceneControl>
-            <StackPanel Background="{DynamicResource BackgroundBrush}" Name="ObjectExplorer" HorizontalAlignment="Right" Width="265">
+            <!--<StackPanel Background="{DynamicResource BackgroundBrush}" Name="ObjectExplorer" HorizontalAlignment="Right" Width="265">
                 <controls:ObjectControl>
                     <controls:ObjectControl.ContextMenu>
                         <ContextMenu>
@@ -131,7 +131,7 @@
                         </ContextMenu>
                     </controls:ObjectControl.ContextMenu>
                 </controls:ObjectControl>
-            </StackPanel>
+            </StackPanel>-->
         </Grid>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,51,0,10" HorizontalAlignment="Left" Width="46">
@@ -149,6 +149,9 @@
             </Button>
             <Button Style="{DynamicResource ToolButton}" Command="{Binding SelectToolCommand}" CommandParameter="Line">
                 <Image Source="../../Resources/make.png" Height="24" Width="24"></Image>
+            </Button>
+            <Button Style="{DynamicResource ToolButton}" Command="{Binding RoseToolCommand}" CommandParameter="Line">
+                <Image Source="../../Resources/rose.png" RenderOptions.BitmapScalingMode="LowQuality" Height="31" Width="32"></Image>
             </Button>
         </StackPanel>
 

@@ -20,8 +20,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Expander Style="{DynamicResource ExpanderStyleDefault}" Header="Triangle" Grid.Row="1" IsExpanded="True">
-            <TextBlock Height="200">TEXT</TextBlock>
+        <Expander Name="Expander" Style="{DynamicResource ExpanderStyleDefault}" Grid.Row="1" IsExpanded="True">
+            <StackPanel Orientation="Vertical" Name="Props"></StackPanel>
         </Expander>
         <Rectangle Height="1" Fill="Black" Grid.Row="1" VerticalAlignment="Bottom"/>
     </Grid>
