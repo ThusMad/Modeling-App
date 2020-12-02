@@ -153,6 +153,9 @@
             <Button Style="{DynamicResource ToolButton}" Command="{Binding RoseToolCommand}" CommandParameter="Line">
                 <Image Source="../../Resources/rose.png" RenderOptions.BitmapScalingMode="LowQuality" Height="31" Width="32"></Image>
             </Button>
+            <Button Style="{DynamicResource ToolButton}" Command="{Binding SnailToolCommand}" CommandParameter="Line">
+                <Image Source="../../Resources/fx-sign.png" RenderOptions.BitmapScalingMode="LowQuality" Height="24" Width="24"></Image>
+            </Button>
         </StackPanel>
 
 

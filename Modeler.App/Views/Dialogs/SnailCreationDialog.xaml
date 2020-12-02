@@ -1,4 +1,4 @@
-﻿<Window x:Class="Modeler.App.Views.Dialogs.RoseCreationDialog"
+﻿<Window x:Class="Modeler.App.Views.Dialogs.SnailCreationDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,21 +7,17 @@
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
-        Title="RoseCreationDialog">
+        Title="SnailCreationDialog">
     <Grid Margin="15">
         <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Width="501">
-                <TextBlock>K </TextBlock>
-                <TextBox Name="KVal" Margin="10,0,0,0" Width="50"></TextBox>
-                <Slider Minimum="0" Maximum="100" Name="R0XSlider" ValueChanged="KValSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>R</TextBlock>
+                <TextBox Name="RVal" Margin="10,0,0,0" Width="50"></TextBox>
+                <Slider Minimum="0" Maximum="1200" Name="RSlider" ValueChanged="RValSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
                 <Rectangle Width="1" Fill="Black"></Rectangle>
-                <TextBlock Margin="10,0,0,0">Step</TextBlock>
-                <TextBox Name="StepVal"  Margin="10,0,0,0" Width="50"></TextBox>
-                <Slider Minimum="0.01" Maximum="1" Name="R0YSlider" ValueChanged="StepValSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
-            </StackPanel>
-            <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
-                <TextBlock Margin="0,0,20,0">Size:</TextBlock>
-                <TextBox Margin="0,0,20,0" Width="50" Name="SizeVal" TextChanged="SizeVal_OnTextChanged"></TextBox>
+                <TextBlock Margin="10,0,0,0">h</TextBlock>
+                <TextBox Name="HVal"  Margin="10,0,0,0" Width="50"></TextBox>
+                <Slider Minimum="0" Maximum="1000" Name="HSlider" ValueChanged="HValSlider_OnValueChanged" Margin="20,0,0,0" Width="150"/>
             </StackPanel>
             <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
                 <TextBlock Margin="0,0,20,0">CenterX:</TextBlock>

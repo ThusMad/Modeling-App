@@ -7,6 +7,7 @@ using System.Windows.Shapes;
 using GalaSoft.MvvmLight.Messaging;
 using Modeler.Core;
 using Modeler.Core.Models;
+using Modeler.Core.Shapes;
 using Modeler.Core.Utilities;
 using Modeler.Renderer.Native;
 using SharpDX.Direct2D1;
@@ -84,6 +85,12 @@ namespace Modeler.Renderer
                         foreach (var shape in shapesCpy)
                         {
                             var shapeClone = shape.Clone() as ShapeBase;
+
+                            if (shape is Text)
+                            {
+                                shapeClone = shape;
+                            }
+                            
                             shapeClone.Rotate(model.RotationAngle, model.RotationPoint.X, model.RotationPoint.Y);
                             if (model.IsAffineActive)
                             {

@@ -131,6 +131,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\SnailCreationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -164,6 +168,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\ShiftDialog.xaml.cs">
       <DependentUpon>ShiftDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SnailCreationDialog.xaml.cs">
+      <DependentUpon>SnailCreationDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -228,6 +235,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\rose.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\snail.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\fx-sign.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

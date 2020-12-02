@@ -87,6 +87,7 @@
     <Compile Include="Models\HomographyTransformationModel.cs" />
     <Compile Include="Models\RoseCreationModel.cs" />
     <Compile Include="Models\ShapePreviewModel.cs" />
+    <Compile Include="Models\SnailCreationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShapeBase.cs" />
     <Compile Include="Shapes\Arc.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Shapes\Line.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
     <Compile Include="Shapes\Rose.cs" />
+    <Compile Include="Shapes\Snail.cs" />
     <Compile Include="Shapes\Text.cs" />
     <Compile Include="Shapes\Triangle.cs" />
     <Compile Include="Utilities\DrawingExtensions.cs" />

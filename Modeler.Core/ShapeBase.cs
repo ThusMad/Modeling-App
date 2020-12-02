@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Modeler.Core.Attributes;
 using Modeler.Core.Converters;
 using Modeler.Core.Enums;
@@ -144,6 +145,21 @@ namespace Modeler.Core
         public virtual ICollection<RawVector2> BuildNormal(RawVector2 point, int length)
         {
             return new List<RawVector2>();
+        }
+
+        public virtual float CalculateArea(int a)
+        {
+            return 0;
+        }
+
+        public virtual float CalculateArcLength()
+        {
+            return 0;
+        }
+
+        public virtual float CalculateCurvative(RawVector2 point)
+        {
+            return 0;
         }
     }
 }

@@ -31,6 +31,7 @@ namespace Modeler.App.ViewModel
         private IInputElement _source;
         private ShapeBase _tempTangent;
         private ShapeBase _tempNormal;
+        private ShapeBase _tempText;
 
         private int _xShift = 0;
         private int _yShift = 0;
@@ -75,10 +76,33 @@ namespace Modeler.App.ViewModel
             AffineCommand = new RelayCommand(AffineTransformShape);
             HomographyCommand = new RelayCommand(HomographyTransformShaoe);
             RoseToolCommand = new RelayCommand(RoseCreationAction);
+            SnailToolCommand = new RelayCommand(SnailCreationAction);
             Tabs = new ObservableCollection<TabModel>();
         }
 
-      
+        private void SnailCreationAction()
+        {
+            var snailDialog = new SnailCreationDialog(_source);
+            var tempSnail = new Snail(0, 0, 0, 0, 0, 0, new RawColor4(1f, 0f, 0f, 1f));
+            _drawModel.Shapes.Add(tempSnail);
+
+            snailDialog.ModelUpdate += model =>
+            {
+                _drawModel.Shapes.Remove(tempSnail);
+                tempSnail = new Snail(model, new RawColor4(1f, 0f, 0f, 1f));
+                _drawModel.Shapes.Add(tempSnail);
+
+                Messenger.Default.Send<DrawModel>(_drawModel);
+            };
+
+            if (snailDialog.ShowDialog() == true)
+            {
+                _drawModel.Shapes.Remove(tempSnail);
+                _drawModel.Shapes.Add(new Snail(snailDialog.SnailCreationModel, new RawColor4(0f, 0f, 0f, 1f)));
+                Messenger.Default.Send<DrawModel>(_drawModel);
+            }
+        }
+
 
         private void RoseCreationAction()
         {
@@ -202,7 +226,8 @@ namespace Modeler.App.ViewModel
             _sceneSize = new IntPoint((int)obj.NewSize.Width - 50, (int)obj.NewSize.Height - 150);
             Messenger.Default.Send<DrawModel>(_drawModel);
         }
-
+        
+        public RelayCommand SnailToolCommand { get; set; }
         public RelayCommand RoseToolCommand { get; set; }
         public RelayCommand DrawDebugInfoCommand { get; private set; }
         public RelayCommand ShiftCommand { get; private set; }
@@ -319,8 +344,6 @@ namespace Modeler.App.ViewModel
         {
             var shape = DetectMouseCollision(_drawModel.Shapes, new IntPoint((int)currentPoint.X, (int)currentPoint.Y));
             
-
-
             if (shape != null)
             {
                 if (shape.Item1 == null)
@@ -341,6 +364,12 @@ namespace Modeler.App.ViewModel
                     _tempNormal = null;
                 }
 
+                if (_tempText != null)
+                {
+                    _drawModel.Shapes.Remove(_tempText);
+                    _tempText = null;
+                }
+
                 _shapeOver = shape.Item1;
 
                 shape.Item1.Color = new RawColor4(1f, 0f, 0f, 1f);
@@ -350,6 +379,9 @@ namespace Modeler.App.ViewModel
 
                 var tangent = shape.Item1.BuildTangen(shape.Item2, 300);
                 var normal = shape.Item1.BuildNormal(shape.Item2, 300);
+                var curv = shape.Item1.CalculateCurvative(shape.Item2);
+
+                _tempText = new Text((int)shape.Item2.X + 20, (int)shape.Item2.Y + 20, $"R = {curv}", new RawColor4(0, 0f, 0.3f, 1f));
 
                 _tempTangent = new Line(0, 0, 0, 0, new RawColor4(0, 0f, 0.3f, 1f))
                 {
@@ -363,6 +395,7 @@ namespace Modeler.App.ViewModel
 
                 _drawModel.Shapes.Add(_tempTangent);
                 _drawModel.Shapes.Add(_tempNormal);
+                _drawModel.Shapes.Add(_tempText);
 
                 Messenger.Default.Send<DrawModel>(_drawModel);
             }
@@ -687,6 +720,12 @@ namespace Modeler.App.ViewModel
 
                         if (inpDialog.ShowDialog() == true)
                             arc.Angle = inpDialog.Angle;
+                    }
+
+                    if (_shapeOver is Rose rose)
+                    {
+                        MessageBox.Show($"Area: {_shapeOver.CalculateArea(rose.Size)} \n" +
+                                                   $"Arc Lenght: {_shapeOver.CalculateArcLength()}");
                     }
                 }
             }
